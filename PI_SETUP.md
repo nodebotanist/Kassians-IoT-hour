@@ -42,4 +42,14 @@ network={
 
 ## SSHing in and getting started
 
+1. `ssh pi@raspberrypi.local`
+1. password is `raspberry`
+1. run `passwd` to change the password
+1. run `sudo apt-get update` then `sudo apt-get upgrade`
+1. Install Node.JS [from the nodesource maintained binaries](https://github.com/nodesource/distributions): `curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash` followed by `sudo apt-get install -y nodejs`
+1. Update npm to the latest version: `sudo npm i -g npm`
+1. Change npm's working directory using [these instructions](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
+1. Install some dev dependencies: `npm i -g forever nodemon`
+1. [Install cloudflared](https://blog.cloudflare.com/cloudflare-argo-tunnel-with-rust-and-raspberry-pi/)
 
+Next, we'll start [setting up the codebase](./CODEBASE_SETUP.md)
