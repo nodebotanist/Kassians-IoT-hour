@@ -4,8 +4,6 @@
 * [Configuring for Wifi and SSH](#setting-up-wifi-and-ssh)
 * [SSHing in and getting started](#sshing-in-and-getting-started)
 * [Installing cloudflared](#installing-cloudflared)
-* [Cloning the raspi example code](#cloning-the-raspi-example-code)
-* [Running the raspi code](#running-the-raspi-code)
 
 ## Installing Raspbian
 
@@ -50,6 +48,20 @@ network={
 1. Update npm to the latest version: `sudo npm i -g npm`
 1. Change npm's working directory using [these instructions](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
 1. Install some dev dependencies: `npm i -g forever nodemon`
-1. [Install cloudflared](https://blog.cloudflare.com/cloudflare-argo-tunnel-with-rust-and-raspberry-pi/)
+
+## Installing `cloudflared` daemon
+
+1. [get the ARM build of `cloudflared`](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.tgz): `wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.tgz`
+1. Untar it into a new directory: `mkdir argo-tunnel && tar -xvzf cloudflared-stable-linux-arm.tgz -C ./argo-tunnel && cd argo-tunnel`
+1. Check that it can be executed: `./cloudflared --version` should print a version number
+1. Login: 
+	1. `./cloudflared login` will produce a URL-- copy this URL to your host computer, log in, and choose a domain
+	1. This will send a cert to your pi at `~/.cloudflared/cert.pem`
+1. Create a config file for your daemon: `sudo nano /etc/cloudflared/config.yml` with the following:
+	```
+		hostname: iot.yourdomain.com
+		url: http://127.0.0.1:8000
+	```
+1. Install the daemon with systemctl: `sudo ./cloudflared service install`
 
 Next, we'll start [setting up the codebase](./CODEBASE_SETUP.md)
