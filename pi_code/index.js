@@ -10,8 +10,14 @@ const server = restify.createServer()
 
 board.on('ready', () => {
   let lamp = new five.Led('GPIO6')
+  let temp = new five.Multi({
+    controller: 'SI7020',
+    freq: 3000
+  })
+  let celsius = 21
 
   server.get('/lamp/:on', setLampState)
+  server.get('/temp', sendTemp)
 
   function setLampState(req, res, next) {
     let state = req.params.on === 'true'
@@ -24,6 +30,16 @@ board.on('ready', () => {
     }
     next()
   }
+
+  function sendTemp(req, res, next) {
+    res.send('The temperature in Celsius is :' + celsius)
+    next()
+  }
+
+  temp.on('change', function(){
+    console.log(this.thermometer.celsius)
+    celsius = this.thermometer.celsius
+  })
 
   server.listen(8000, () => {
     console.log('server listening on port ' + server.url)
