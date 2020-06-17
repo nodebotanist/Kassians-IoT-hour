@@ -1,0 +1,10 @@
+name = "show-temp"
+type = "webpack"
+account_id = "48fde1755115d1dba078466c9a17f5cb"
+workers_dev = true
+route = ""
+zone_id = ""
+
+kv-namespaces = [
+	 { binding = "TEMP", id = "0de795c7d10a4909b3642bdf5f42ebdd" }
+]
