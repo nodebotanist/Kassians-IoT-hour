@@ -1,12 +1,15 @@
 const Raspi = require('raspi-io').RaspiIO
 const five = require('johnny-five')
 const restify = require('restify')
+const bent = require('bent')
 
 const board = new five.Board({
   io: new Raspi()
 })
 
 const server = restify.createServer()
+
+const post = bent('https://show-temp.nodebotanist.workers.dev/', 'POST', 'json', 200);
 
 board.on('ready', () => {
   let lamp = new five.Led('GPIO6')
@@ -36,8 +39,9 @@ board.on('ready', () => {
     next()
   }
 
-  temp.on('change', function(){
+  temp.on('change', async function(){
     console.log(this.thermometer.celsius)
+    const response = await post('/', {temp: this.thermometer.celsius});
     celsius = this.thermometer.celsius
   })
 

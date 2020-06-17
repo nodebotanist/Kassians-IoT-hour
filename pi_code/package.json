@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bent": "^7.3.5",
     "johnny-five": "^1.4.0",
     "raspi-io": "^11.0.0",
     "restify": "^8.5.1"
