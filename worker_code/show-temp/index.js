@@ -8,7 +8,9 @@ addEventListener('fetch', event => {
 })
 
 async function addTemp(request) {
-    await TEMP.put('temperature', request.Body.json)
+    let body = await request.json()
+    console.log(body)
+    await TEMP.put('temperature', JSON.stringify(body))
     return new Response('Temperature added')
 }
 
