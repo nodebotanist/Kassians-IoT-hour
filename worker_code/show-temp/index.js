@@ -9,8 +9,19 @@ addEventListener('fetch', event => {
 
 async function addTemp(request) {
     let body = await request.json()
-    console.log(body)
-    await TEMP.put('temperature', JSON.stringify(body))
+    let current = JSON.parse(await TEMP.get('temperature'))
+    console.log('length', current.length)
+    if(!current.length){
+        console.log('creating array')
+        current = []
+    }
+    body.time = new Date().toISOString()
+    current.push(body)
+    if(current.length > 50) {
+        current = current.slice(current.legnth-50)
+    }
+    console.log(body, current)
+    await TEMP.put('temperature', JSON.stringify(current))
     return new Response('Temperature added')
 }
 
