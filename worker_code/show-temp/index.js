@@ -32,7 +32,9 @@ async function handleRequest(request) {
 
     r.get('/', async function () {
         let temperature = await TEMP.get('temperature')
-        return new Response(JSON.stringify(temperature))
+        let res = new Response(JSON.stringify(temperature))
+        res.headers.set('Access-Control-Allow-Origin', '*')
+        return res
     }) // return a default message for the root route
 
     const resp = await r.route(request)
