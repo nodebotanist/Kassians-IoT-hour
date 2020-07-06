@@ -22,6 +22,8 @@
 		mode: 'cors'
 	}).then(async function(data){
 		jsonData = await data.json()
+		jsonData = JSON.parse(jsonData)
+		jsonData = jsonData.slice(jsonData.length - 50, jsonData.length)
 		console.log(jsonData)
 	})
 })()
