@@ -1,0 +1,6 @@
+name = "iot-push"
+type = "javascript"
+account_id = "48fde1755115d1dba078466c9a17f5cb"
+workers_dev = true
+route = ""
+zone_id = ""
