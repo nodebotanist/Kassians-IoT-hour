@@ -18,7 +18,8 @@ async function addTemp(request) {
     body.time = new Date().toISOString()
     current.push(body)
     if(current.length > 50) {
-        current = current.slice(current.legnth-50)
+        console.log(current.length)
+        current = current.slice(current.legnth-50, current.length)
     }
     console.log(body, current)
     await TEMP.put('temperature', JSON.stringify(current))
