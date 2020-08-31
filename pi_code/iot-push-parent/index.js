@@ -39,16 +39,16 @@ router.post('/temp-data', (req, res)=>{
 
 })
 
-const requestListener = function (req, res) {
-	router(req, res, ()=>{})
-}
-
 tempSubscriber.on("message", (channel, message) => {
 	console.log(`Channel: ${channel} Message: ${message}`)
 })
 
 tempSubscriber.subscribe('iot-push')
 tempSubscriber.subscribe('temp-data')
+
+const requestListener = function (req, res) {
+	router(req, res, () => { })
+}
 
 const server = http.createServer(requestListener)
 server.listen(port, host, () => {
