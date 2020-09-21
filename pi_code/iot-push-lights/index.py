@@ -1,5 +1,16 @@
 from bottle import route, run
 import unicornhathd
+import redis
+
+parent = redis.Redis(host='pi-iot-push.local')
+
+sensorData = parent.pubsub()
+
+def sensor_data_recieved(message):
+	print('test')
+	print(message)
+
+sensorData.subscribe({'iot-sensor-data': sensor_data_recieved})
 
 @route('/hello')
 def hello():
