@@ -1,6 +1,7 @@
 const http = require('http')
 const Redis = require('redis')
 const Router = require('router')
+const bent = require('bent')
 
 const router = Router()
 
@@ -21,7 +22,10 @@ parent.on('error', (err) => {
 	console.log(err)
 })
 
-router.get('/', (req, res) => {
+json = bent('json')
+
+router.get('/', async function (req, res) {
+	await json('http://push.nodebotani.st/child-access')
 	res.setHeader("Content-Type", "application/json")
 	res.writeHead(200)
 	res.end(`{"message": "IoT child accessed"}`)
