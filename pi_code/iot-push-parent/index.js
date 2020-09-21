@@ -17,6 +17,14 @@ router.get('/', (req, res) => {
 		res.end(`{"message": "Message published"}`)
 })
 
+router.get('/child-access', (req, res) => {
+	console.log('access')
+	pubsub.publish('iot-push', new Date().toString())
+	res.writeHead(200)
+	res.setHeader('Content-Type', 'application/json')
+	res.end(`{"message": "child access logged!"}`)
+})
+
 router.post('/temp-data', (req, res)=>{
 	let body = '';
 	req.on('data', chunk => {
