@@ -53,6 +53,7 @@ tempSubscriber.on("message", (channel, message) => {
 
 tempSubscriber.subscribe('iot-push')
 tempSubscriber.subscribe('temp-data')
+tempSubscriber.subscribe('iot-sensor-data')
 
 const requestListener = function (req, res) {
 	router(req, res, () => { })
