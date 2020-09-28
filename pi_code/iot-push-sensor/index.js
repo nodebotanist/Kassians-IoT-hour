@@ -14,10 +14,10 @@ parent.on('ready', () => {
 	parent.subscribe('iot-sensor-data')
 
 	setInterval(() => {
-		publisher.publish('iot-sensor-data', {
+		publisher.publish('iot-sensor-data', JSON.stringify({
 			type: 'temp-lab',
 			value: Math.floor(Math.random() * 4) + 25
-		})
+		}))
 	}, 5000)
 })
 
