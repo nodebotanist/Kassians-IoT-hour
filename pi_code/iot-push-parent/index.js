@@ -59,8 +59,12 @@ tempSubscriber.on("message", (channel, message) => {
 
 	if(channel === 'iot-sensor-data') {
 		let data = JSON.parse(message)
-		pubsub.hset(data.type, data.value, () => {
-			console.log(`Sensor type ${data.type} set to ${data.value}`)
+		data.value.timestamp = new Date()
+		pubsub.lpush(`${data.value.zone}-${data.type}`, JSON.stringify(data.value), (err, index) => {
+			console.log(`Sensor ${data.value.zone}-${data.type} set index ${index}`)
+		})
+		pubsub.lrange(`${data.value.zone}-${data.type}`, 0, -1, (err, data) => {
+			console.log(data)
 		})
 	}
 })
