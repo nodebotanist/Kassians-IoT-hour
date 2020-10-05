@@ -60,7 +60,7 @@ board.on('ready', () => {
 			}))
 		}
 
-		publishData()
+		setTimeout(publishData, 1000)
 		setInterval(publishData, 60000)
 	})
 })
