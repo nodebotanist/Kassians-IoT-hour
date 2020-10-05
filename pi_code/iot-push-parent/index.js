@@ -1,6 +1,7 @@
 const http = require("http")
 const Router = require('router')
 const redis = require("redis")
+const { Console } = require("console")
 
 const host = 'localhost'
 const port = 8000
@@ -15,6 +16,12 @@ router.get('/', (req, res) => {
 		res.setHeader("Content-Type", "application/json")
 		res.writeHead(200)
 		res.end(`{"message": "Message published"}`)
+})
+
+router.get('/sensor-data/:type', (req, res) => {
+	res.setHeader("Content-Type", "application/json")
+	res.writeHead(200)
+	res.end(`{"type": "${type}"}`)
 })
 
 router.get('/child-access', (req, res) => {
@@ -49,6 +56,13 @@ router.post('/temp-data', (req, res)=>{
 
 tempSubscriber.on("message", (channel, message) => {
 	console.log(`Channel: ${channel} Message: ${message}`)
+
+	if(channel === 'iot-sensor-data') {
+		let data = JSON.parse(message)
+		pubsub.hset(data.type, data.value, () => {
+			console.log(`Sensor type ${data.type} set to ${data.value}`)
+		})
+	}
 })
 
 tempSubscriber.subscribe('iot-push')
