@@ -4,7 +4,7 @@ function NavBar() {
 	return (
 		<nav class="navbar navbar-light bg-light">
 			<a class="navbar-brand" href="#">
-				Bootstrap
+				IoT local dashboard
 			</a>
 		</nav>)
 }
