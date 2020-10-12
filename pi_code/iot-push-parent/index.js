@@ -1,6 +1,7 @@
-const http = require("http")
 const redis = require("redis")
+const Path = require('path')
 const Hapi = require('@hapi/hapi')
+const Inert = require('@hapi/inert')
 const Bluebird = require('bluebird')
 
 const pubsub = redis.createClient()
@@ -14,8 +15,15 @@ const init = async () => {
 
 	const server = Hapi.server({
 		port,
-		host
-	});
+		host,
+		routes: {
+			files: {
+				relativeTo: Path.join(__dirname, 'build')
+			}
+		}
+	})
+
+	await server.register(Inert)
 
 	server.route({
 		method: ['GET'],
@@ -39,6 +47,17 @@ const init = async () => {
 			return result
 		}
 	})
+
+	server.route({
+		method: 'GET',
+		path: '/{param*}',
+		handler: {
+			directory: {
+				path: '.',
+				redirectToSlash: true
+			}
+		}
+	});
 
 	await server.start()
 	console.log('Server running on %s', server.info.uri)
