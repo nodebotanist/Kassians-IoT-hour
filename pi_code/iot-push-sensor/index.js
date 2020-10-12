@@ -44,6 +44,13 @@ board.on('ready', () => {
 				}
 			}))
 			publisher.publish('iot-sensor-data', JSON.stringify({
+				type: 'relative-humidity',
+				value: {
+					zone: 'lab',
+					relativeHumidity
+				}
+			}))
+			publisher.publish('iot-sensor-data', JSON.stringify({
 				type: 'barometer-pressure',
 				value: {
 					zone: 'lab',
