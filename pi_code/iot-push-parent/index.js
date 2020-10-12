@@ -47,39 +47,7 @@ const init = async () => {
 process.on('unhandledRejection', (err) => {
 	console.log(err)
 	process.exit(1)
-});
-
-
-
-// router.get('/child-access/', (req, res) => {
-// 	console.log('access')
-// 	//pubsub.publish('iot-push', new Date().toString())
-// 	res.writeHead(200)
-// 	res.setHeader('Content-Type', 'application/json')
-// 	res.end(`{"message": "child access logged!"}`)
-// })
-
-// router.post('/temp-data/', (req, res)=>{
-// 	let body = '';
-// 	req.on('data', chunk => {
-// 			body += chunk.toString(); // convert Buffer to string
-// 	});
-// 	req.on('end', () => {
-// 		body = JSON.parse(body)
-// 		console.log(body)
-// 		if(body && body.temp){
-// 			pubsub.publish('temp-data', body.temp)
-// 			res.setHeader('Content-Type', 'application/json')
-// 			res.writeHead(200)
-// 			res.end(`{"message": "Temperature data sent"}`)
-// 		} else {
-// 			res.setHeader('Content-Type', 'application/json')
-// 			res.writeHead(400)
-// 			res.end(`{"error": "Need a temp field in a JSON body"}`)
-// 		}
-// 	});
-
-// })
+})
 
 tempSubscriber.on("message", (channel, message) => {
 	console.log(`Channel: ${channel} Message: ${message}`)
