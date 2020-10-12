@@ -77,9 +77,7 @@ tempSubscriber.on("message", (channel, message) => {
 		pubsub.lpush(`${data.value.zone}-${data.type}`, JSON.stringify(data.value), (err, index) => {
 			console.log(`Sensor ${data.value.zone}-${data.type} set index ${index}`)
 		})
-		pubsub.lrange(`${data.value.zone}-${data.type}`, 0, -1, (err, data) => {
-			console.log(data)
-		})
+		pubsub.ltrim(`${data.value.zone}-${data.type}`, 0, 99)
 	}
 })
 
